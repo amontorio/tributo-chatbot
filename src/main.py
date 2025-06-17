@@ -17,8 +17,8 @@ pg = st.navigation(
 
 st.set_page_config(
     page_title="ATC",
-    page_icon="💊",
-    layout="wide"
+    page_icon="🛠️",
+    # layout="wide"
 )
 
 def get_base64_of_bin_file(bin_file):
@@ -29,14 +29,14 @@ def get_base64_of_bin_file(bin_file):
 
 BASE_DIR = Path(__file__).resolve().parent
 
-logo_maxam = "maxam-logo-no-background.png"
-logo_path = BASE_DIR / "images" / logo_maxam
+logo_atc = "atc-logo-completo-removebg.png"
+logo_path = BASE_DIR / "images" / logo_atc
 
-logo_maxam_small = "maxam-logo-no-background-small.png"
-logo_small_path = BASE_DIR / "images" / logo_maxam_small
+logo_atc_small = "atc-logo-completo-removebg-small.png"
+logo_small_path = BASE_DIR / "images" / logo_atc_small
 
 st.logo(logo_path, 
-        link = "https://www.maxamcorp.com/es",
+        link = "https://www3.gobiernodecanarias.org/tributos/atc/",
         icon_image = logo_small_path, 
         size = "large")
 

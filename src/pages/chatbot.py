@@ -13,7 +13,7 @@ def render_or_update_model_info(model_name):
     st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
     # Codificar imagen como base64
-    image_path = os.path.join(os.path.dirname(__file__), '..', 'images', 'maxam-logo-no-background.png')
+    image_path = os.path.join(os.path.dirname(__file__), '..', 'images', 'atc-logo-completo-removebg.png')
     with open(image_path, 'rb') as img_file:
         img_base64 = base64.b64encode(img_file.read()).decode()
     image_data_uri = f"data:image/png;base64,{img_base64}"
@@ -66,23 +66,16 @@ for role, content in st.session_state.messages:
 
 # Entrada del usuario
 prompt = st.chat_input(
-    placeholder="¿En qué puedo ayudarte?",
-    accept_file="multiple",
-    file_type=["pdf"]
+    placeholder="¿En qué puedo ayudarte?"
+    # accept_file="multiple",
+    # file_type=["pdf"]
 )
 
 if prompt:
-    text_input = prompt.text
-    uploaded_files = prompt.files
+    text_input = prompt
 
     with st.chat_message("user"):
         st.markdown(text_input)
-        for uploaded_file in uploaded_files:
-            with st.chat_message("user", avatar="📄"):
-                with st.status(uploaded_file.name):
-                    st.markdown(f"**Nombre:** {uploaded_file.name}")
-                    st.markdown(f"**Tipo:** {uploaded_file.type}")
-                    st.markdown(f"**Tamaño:** {uploaded_file.size} bytes")
 
     # Procesar con LLM (solo texto)
     with st.chat_message("assistant"):

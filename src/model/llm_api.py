@@ -17,9 +17,10 @@ This module provides functions to interact with LLMs hosted on Azure and GCP.
 It includes functions to invoke basic and vision chains, upload files to Azure Blob Storage and GCP, and handle streaming responses.
 """
 
-azure_endpoint = str(os.getenv("AZURE_ENDPOINT", "")).rstrip("/")
-api_key = os.getenv("OPENAI_API_KEY", "")
+# azure_endpoint = str(os.getenv("AZURE_ENDPOINT", "")).rstrip("/")
+api_key = os.getenv("GOOGLE_API_KEY", "")
 
+print(api_key)
 
 @st.cache_data(show_spinner=True, ttl=3600)
 def pdf_file_to_base64_string(filepath):
@@ -66,7 +67,13 @@ def is_tax_related_question(question: str) -> bool:
 def get_cached_chains():
 
     base_messages = [
-        ("system", "Responde a la pregunta del usuario en español."),
+        ("system", """
+        Eres un asistente experto en ordenanzas fiscales municipales, especializado en el Impuesto sobre Construcciones, Instalaciones y Obras (ICIO).
+        Tu tarea es responder de forma clara, precisa y conforme a la normativa vigente, las preguntas que te realicen los ciudadanos o técnicos municipales sin hacer mención al documento adjunto.
+        
+        Siempre responde de forma sencilla pero rigurosa, indicando si las condiciones dependen de cada Ayuntamiento (por ejemplo, en las bonificaciones) y, si es posible, remite al artículo correspondiente de la ordenanza fiscal o legislación aplicable (como la Ley Reguladora de las Haciendas Locales).
+        Si una pregunta no se puede responder sin conocer detalles específicos de la ordenanza local, indícalo claramente y sugiere consultar directamente con el Ayuntamiento correspondiente.
+        """),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
     ]
