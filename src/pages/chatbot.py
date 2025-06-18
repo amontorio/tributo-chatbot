@@ -13,7 +13,7 @@ def render_or_update_model_info(model_name):
     st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
     # Codificar imagen como base64
-    image_path = os.path.join(os.path.dirname(__file__), '..', 'images', 'atc-logo-completo-removebg.png')
+    image_path = os.path.join(os.path.dirname(__file__), '..', 'images', 'malaga-logo-removebg.png')
     with open(image_path, 'rb') as img_file:
         img_base64 = base64.b64encode(img_file.read()).decode()
     image_data_uri = f"data:image/png;base64,{img_base64}"
