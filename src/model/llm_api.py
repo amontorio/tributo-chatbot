@@ -10,6 +10,8 @@ import mimetypes
 import base64
 import httpx
 
+from google.ai.generativelanguage_v1beta.types import Tool as GenAITool
+
 # -*- coding: utf-8 -*-
 """
 LLM API for Azure and GCP
@@ -102,6 +104,20 @@ def get_cached_chains():
 
     return {"with_file": chain_con_file, "without_file": chain_sin_file}
 
+@st.cache_resource(show_spinner=False)
+def get_web_chain():
+    base_messages = [
+        ("system", """
+        Busca en internet para dar respuesta a las preguntas de los usuarios.
+        """),
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("human", "{input}"),
+    ]
+    prompt = ChatPromptTemplate.from_messages(messages=base_messages)
+    chain = prompt | llm | StrOutputParser()
+
+    return chain
+
 def invoke_basic_chain(input_text, chat_history, streaming=True):
     include_file = is_tax_related_question(input_text)
     chains = get_cached_chains()
@@ -128,3 +144,17 @@ def invoke_basic_chain(input_text, chat_history, streaming=True):
         else:
             res = chain.invoke({"input": input_text, "chat_history": chat_history})
             return res
+
+def invoke_web_chain(input_text, chat_history, streaming=True):
+    chain= get_web_chain()
+    if streaming:
+        res = ""
+        for chunk in chain.stream({"input": input_text, "chat_history": chat_history}):
+            res += chunk
+            yield chunk
+        invoke_web_chain.response = res
+    else:
+        res = chain.invoke({"input": input_text, "chat_history": chat_history},
+                           tools=[GenAITool(google_search={})],)
+        invoke_web_chain.response = res
+        return res
