@@ -74,6 +74,8 @@ def render_or_update_model_info(model_name):
 def reset_chat_history():
     """Resets the chat history."""
     if "memory" in st.session_state:
+        texto_toast = "Historial eliminado correctamente!"
+        st.toast(texto_toast, icon = "✔️")
         st.session_state.memory.messages = []
 
 # Inicializar configuración del modelo
@@ -96,7 +98,8 @@ with st.sidebar:
     if st.button("Clear Chat 🧹", use_container_width=True):
         reset_chat_history()
 
-    st.session_state.web_mode  = st.toggle("Modo Web", value=False)
+    st.session_state.web_mode  = st.toggle("Modo Web", value=False, on_change=reset_chat_history)
+
     #st.write("Modo Web:", "Activado" if st.session_state.web_mode else "Desactivado")
 render_or_update_model_info(st.session_state.model)
 
