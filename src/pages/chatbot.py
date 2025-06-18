@@ -97,7 +97,7 @@ with st.sidebar:
         reset_chat_history()
 
     st.session_state.web_mode  = st.toggle("Modo Web", value=False)
-    st.write("Modo Web:", "Activado" if st.session_state.web_mode else "Desactivado")
+    #st.write("Modo Web:", "Activado" if st.session_state.web_mode else "Desactivado")
 render_or_update_model_info(st.session_state.model)
 
 # Mostrar historial de mensajes
