@@ -136,6 +136,7 @@ if prompt:
             tavily_search_tool = TavilySearch(
                 max_results=5,
                 topic="general",
+                country="spain",
             )
             #system_prompt = hub.pull("hwchase17/react")
             system_prompt = ChatPromptTemplate.from_messages(
