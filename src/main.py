@@ -36,7 +36,7 @@ logo_atc_small = "malaga-logo-removebg-small.png"
 logo_small_path = BASE_DIR / "images" / logo_atc_small
 
 st.logo(logo_path, 
-        link = "https://www.malaga.eu/el-ayuntamiento/organizacion-municipal/areas-de-gobierno/index.html?idUnidad=127",
+        link = "https://gestrisam.malaga.eu/tributos/tributos-destacados/icio/",
         icon_image = logo_small_path, 
         size = "large")
 
